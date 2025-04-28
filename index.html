@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bike with you</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #ffeef8 0%, #fff8e1 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 1rem;
+      }
+      .container {
+        width: 100%;
+        max-width: 380px;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+      }
+      h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 2.5rem;
+        color: #ff4d79;
+        margin-bottom: 0.8rem;
+      }
+      p {
+        margin-bottom: 1.5rem;
+        color: #444;
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.7rem 1.4rem;
+        margin: 0.4rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+      }
+      .yes-btn {
+        background: #ff6fa3;
+        color: #fff;
+      }
+      .yes-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(255, 111, 163, 0.4);
+      }
+      .no-btn {
+        background: #ddd;
+        color: #555;
+      }
+      .no-btn:hover {
+        background: #ccc;
+      }
+      input[type="time"] {
+        padding: 0.7rem;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      ul {
+        list-style: none;
+        text-align: left;
+        margin-bottom: 1.5rem;
+      }
+      ul li {
+        margin-bottom: 0.6rem;
+        font-size: 1rem;
+        position: relative;
+        padding-left: 1.6em;
+      }
+      ul li::before {
+        content: "🌟";
+        position: absolute;
+        left: 0;
+      }
+      .gif {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 1.5rem;
+        }
+        h1 {
+          font-size: 2rem;
+        }
+        button {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.9rem;
+        }
+        input[type="time"] {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Page 1 -->
+      <div class="page" id="page1">
+        <h1>Hey Marika, little bike ride Saturday like we discussed?</h1>
+        <button id="yes1" class="yes-btn">Absolutely!</button>
+        <button id="no1" class="no-btn">No sorry</button>
+      </div>
+      <!-- Page 2 -->
+      <div class="page" id="page2" style="display: none">
+        <h1>Need a lift ?</h1>
+        <p>Shall I swing by to pick you up?</p>
+        <button id="yes2" class="yes-btn">Yes, please!</button>
+        <button id="no2" class="no-btn">No, thanks</button>
+      </div>
+      <!-- Page 3 -->
+      <div class="page" id="page3" style="display: none">
+        <h1>Choose a time</h1>
+        <p>What time works best for you?</p>
+        <input type="time" id="timeInput" />
+        <button id="next3" class="yes-btn">Next</button>
+      </div>
+      <!-- Page 4: The Plan -->
+      <div class="page" id="page4" style="display: none">
+        <h1>The plan</h1>
+        <p>Here’s our little plan:</p>
+        <ul>
+          <li>Pick you up at <span id="chosenTime"></span></li>
+          <li>
+            Head back to univeristy and grab the bikes from the uni station
+          </li>
+          <li>Ride to somewhere… any spot you like</li>
+        </ul>
+        <button id="nextPlan" class="yes-btn">Sounds perfect!</button>
+      </div>
+      <!-- Page 5: What to Bring -->
+      <div class="page" id="page5" style="display: none">
+        <img
+          src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExajdnaDBnaXdpYms2M2txajJpOWUzeDI0NnBpbmw1OTNvcnBtemRzNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tpVKvAabWt3G5csMkT/giphy.gif"
+          alt="Cute bike gif"
+          class="gif"
+        />
+        <h1>What to bring</h1>
+        <p>Just bring:</p>
+        <ul>
+          <li>Your lovely self</li>
+          <li>Your beautiful smile</li>
+          <li>Your stunning energy</li>
+        </ul>
+        <button id="next5" class="yes-btn">Almost there!</button>
+      </div>
+      <!-- Page 6: Thank You -->
+      <div class="page" id="page6" style="display: none">
+        <h1>Thanks, Marika!</h1>
+        <p>
+          I can’t wait—please text me here because I can’t see your answers on
+          this page. 🙃
+        </p>
+      </div>
+    </div>
+    <script>
+      const pages = Array.from(document.querySelectorAll(".page"));
+      function show(id) {
+        pages.forEach(
+          (p) => (p.style.display = p.id === id ? "block" : "none")
+        );
+      }
+      document.getElementById("yes1").onclick = () => show("page2");
+      document.getElementById("no1").addEventListener("mouseover", () => {
+        const btn = document.getElementById("no1");
+        btn.style.transform = `translate(${Math.random() * 60}px, ${
+          Math.random() * 60
+        }px)`;
+      });
+      document.getElementById("yes2").onclick = () => show("page3");
+      document.getElementById("no2").addEventListener("mouseover", () => {
+        const btn = document.getElementById("no2");
+        btn.style.transform = `translate(${Math.random() * 60}px, ${
+          Math.random() * 60
+        }px)`;
+      });
+      document.getElementById("next3").onclick = () => {
+        const time = document.getElementById("timeInput").value;
+        if (!time) return alert("Just pick a time 😊");
+        document.getElementById("chosenTime").innerText = time;
+        show("page4");
+      };
+      document.getElementById("nextPlan").onclick = () => show("page5");
+      document.getElementById("next5").onclick = () => show("page6");
+    </script>
+  </body>
+</html>
