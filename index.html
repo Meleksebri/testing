@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <style>
+      /* Reset & Basics */
       * {
         margin: 0;
         padding: 0;
@@ -19,20 +20,35 @@
       }
       body {
         font-family: "Roboto", sans-serif;
-        background: linear-gradient(135deg, #ffeef8 0%, #fff8e1 100%);
+        /* Animated gradient background */
+        background: linear-gradient(135deg, #ffeef8, #fff8e1, #e1fffb, #e1faff);
+        background-size: 400% 400%;
+        animation: gradientBG 12s ease infinite;
         display: flex;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        padding: 1rem;
+        overflow: hidden;
+      }
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
       .container {
-        width: 100%;
+        width: 90%;
         max-width: 380px;
-        background: #fff;
+        background: rgba(255, 255, 255, 0.9);
         padding: 2rem;
         border-radius: 20px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
         text-align: center;
         position: relative;
       }
@@ -41,29 +57,49 @@
         font-size: 2.5rem;
         color: #ff4d79;
         margin-bottom: 0.8rem;
+        animation: slideIn 0.6s ease-out;
       }
       p {
         margin-bottom: 1.5rem;
         color: #444;
         font-size: 1rem;
+        animation: fadeIn 0.8s ease-out;
       }
       button {
         padding: 0.7rem 1.4rem;
-        margin: 0.4rem;
+        margin: 0.5rem;
         font-size: 1rem;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         transition: transform 0.3s, box-shadow 0.3s;
         position: relative;
+        animation: fadeIn 1s ease-out;
+        overflow: hidden;
       }
       .yes-btn {
         background: #ff6fa3;
         color: #fff;
       }
+      .yes-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
+      }
+      .yes-btn:hover::after {
+        width: 200%;
+        height: 200%;
+      }
       .yes-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 15px rgba(255, 111, 163, 0.4);
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(255, 111, 163, 0.4);
       }
       .no-btn {
         background: #ddd;
@@ -79,11 +115,13 @@
         border: 1px solid #ddd;
         margin-bottom: 1rem;
         width: 100%;
+        animation: fadeIn 1.2s;
       }
       ul {
         list-style: none;
         text-align: left;
         margin-bottom: 1.5rem;
+        animation: fadeIn 1.4s;
       }
       ul li {
         margin-bottom: 0.6rem;
@@ -92,7 +130,7 @@
         padding-left: 1.6em;
       }
       ul li::before {
-        content: "🌟";
+        content: "💗";
         position: absolute;
         left: 0;
       }
@@ -100,6 +138,25 @@
         width: 100%;
         border-radius: 10px;
         margin-bottom: 1rem;
+        animation: fadeIn 1.6s;
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
       @media (max-width: 600px) {
         .container {
@@ -143,7 +200,7 @@
       <!-- Page 4: The Plan -->
       <div class="page" id="page4" style="display: none">
         <h1>The plan</h1>
-        <p>Here’s our little plan:</p>
+        <p>Here’s our little date plan:</p>
         <ul>
           <li>Pick you up at <span id="chosenTime"></span></li>
           <li>
@@ -165,7 +222,7 @@
         <ul>
           <li>Your lovely self</li>
           <li>Your beautiful smile</li>
-          <li>Your stunning energy</li>
+          <li>Your amazing energy</li>
         </ul>
         <button id="next5" class="yes-btn">Almost there!</button>
       </div>
@@ -186,19 +243,24 @@
         );
       }
       document.getElementById("yes1").onclick = () => show("page2");
-      document.getElementById("no1").addEventListener("mouseover", () => {
-        const btn = document.getElementById("no1");
-        btn.style.transform = `translate(${Math.random() * 60}px, ${
-          Math.random() * 60
-        }px)`;
-      });
+      // No button behavior: hover on desktop, click/touch on mobile
+      function setupNoButton(id) {
+        const btn = document.getElementById(id);
+        const move = () => {
+          btn.style.transform = `translate(${Math.random() * 60}px, ${
+            Math.random() * 60
+          }px)`;
+        };
+        if (window.innerWidth <= 600) {
+          btn.addEventListener("click", move);
+          btn.addEventListener("touchstart", move);
+        } else {
+          btn.addEventListener("mouseover", move);
+        }
+      }
+      setupNoButton("no1");
       document.getElementById("yes2").onclick = () => show("page3");
-      document.getElementById("no2").addEventListener("mouseover", () => {
-        const btn = document.getElementById("no2");
-        btn.style.transform = `translate(${Math.random() * 60}px, ${
-          Math.random() * 60
-        }px)`;
-      });
+      setupNoButton("no2");
       document.getElementById("next3").onclick = () => {
         const time = document.getElementById("timeInput").value;
         if (!time) return alert("Just pick a time 😊");
